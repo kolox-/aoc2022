@@ -1,11 +1,11 @@
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <numeric>
 #include <string>
 #include <vector>
-#include <iostream>
-#include <fstream>
-#include <algorithm>
-#include <numeric>
 
-namespace cb{
+namespace cb {
 
 template <typename T>
 void parse_stream(std::istream& s, std::vector<T>& out) {
@@ -37,4 +37,4 @@ void print(const std::vector<T>& vec) {
     std::cout << std::endl;
 }
 
-} // namespace cb
+}  // namespace cb
