@@ -3,6 +3,9 @@ string(REPLACE " " "_" DAY ${DAY})
 
 add_executable(${DAY} ${DAY}.cpp)
 
+configure_file(short.txt short.txt COPYONLY)
+configure_file(long.txt long.txt COPYONLY)
+
 target_include_directories(${DAY} PUBLIC
     .
     ../utils
