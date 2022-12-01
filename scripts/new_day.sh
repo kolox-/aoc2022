@@ -9,7 +9,7 @@ NEW_FOLDER="../${DAY}"
 
 pushd $SCRIPT_DIR
 mkdir ${NEW_FOLDER}
-touch ${NEW_FOLDER}/${DAY}.cpp
+cp template.cpp ${NEW_FOLDER}/${DAY}.cpp
 cp ../day01/CMakeLists.txt ${NEW_FOLDER}
 echo "add_subdirectory(${DAY})" >> ../CMakeLists.txt
 ./get.sh ${DAY_NUM} > ${NEW_FOLDER}/long.txt
