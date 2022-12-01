@@ -2,6 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
+#include <numeric>
 
 namespace cb{
 
@@ -10,7 +12,21 @@ void parse_stream(std::istream& s, std::vector<T>& out) {
     T var;
     while (s >> var) {
         out.push_back(var);
+        std::cout << var << std::endl;
     }
+}
+
+inline std::vector<int> parse_stream_ints_until_newline(std::istream& s) {
+    std::vector<int> out;
+    std::string raw;
+    while (std::getline(s, raw)) {
+        if (raw.empty()) {
+            return out;
+        }
+        // std::cout << raw << std::endl;
+        out.push_back(std::stoi(raw));
+    }
+    return out;
 }
 
 template <typename T>
