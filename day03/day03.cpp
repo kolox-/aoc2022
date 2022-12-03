@@ -25,9 +25,9 @@ int part_one(const std::string& filename) {
     cb::parse_stream(infile, inputs);
 
     auto acc_dupes = [](int acc, std::string& rucksack) {
-        auto pivot = rucksack.begin() + rucksack.size() / 2;
-        auto dupes = find_dupes(std::string(rucksack.begin(), pivot),
-                                std::string(pivot, rucksack.end()));
+        auto pivot = rucksack.size() / 2;
+        auto dupes = find_dupes(rucksack.substr(0, pivot),
+                                rucksack.substr(pivot));
         return acc + priority(dupes.front());
     };
 

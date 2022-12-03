@@ -14,7 +14,7 @@ void parse_stream(std::istream& s, std::vector<T>& out) {
     T var;
     while (s >> var) {
         out.push_back(var);
-        std::cout << var << std::endl;
+        // std::cout << var << std::endl;
     }
 }
 
