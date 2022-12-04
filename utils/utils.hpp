@@ -1,11 +1,14 @@
 #pragma once
 
 #include <algorithm>
+#include <cassert>
 #include <fstream>
 #include <iostream>
 #include <numeric>
+#include <regex>
 #include <string>
 #include <string_view>
+#include <tuple>
 #include <vector>
 
 namespace cb {
