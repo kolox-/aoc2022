@@ -13,6 +13,7 @@ struct Instruction {
 ElfStacks parse_stacks(std::fstream& in) {
     std::vector<std::string> raw_inputs;
     std::string tmp;
+    // parse down to the empty line to get the stacks
     while (getline(in, tmp)) {
         if (tmp.empty()) {
             break;
@@ -20,31 +21,24 @@ ElfStacks parse_stacks(std::fstream& in) {
         raw_inputs.emplace_back(std::move(tmp));
     }
 
-    // Get the indexes of the char for each stack in the strings
-    std::string_view stack_ids = raw_inputs.back();
+    // contents of each box start at i=1 and then occur every 4
     std::vector<int> stack_indexes;
-
-    for (auto it = stack_ids.begin();; ++it) {
-        it = std::find_if(it, stack_ids.end(),
-                          [](unsigned char ch) { return !std::isspace(ch); });
-        if (it == stack_ids.end()) {
-            break;
-        }
-        stack_indexes.push_back(std::distance(stack_ids.begin(), it));
+    for (int i = 1; i < raw_inputs.front().size(); i += 4) {
+        stack_indexes.push_back(i);
     }
+
     raw_inputs.pop_back();
+
+    // Build each stack using the indexes we just calculated, from bottom up
+    ElfStacks stacks(stack_indexes.size());
     std::reverse(raw_inputs.begin(), raw_inputs.end());
 
-    ElfStacks stacks(stack_indexes.size());
-
-    // Build each stack using the index we just calculated
     for (size_t i = 0; i != stack_indexes.size(); ++i) {
         auto index = stack_indexes[i];
         for (const auto& str : raw_inputs) {
             unsigned char ch = str[index];
             if (!std::isspace(ch)) {
                 stacks[i].push(ch);
-                // std::cout << "Pushed " << ch << " to " << i << std::endl;
             }
         }
     }
