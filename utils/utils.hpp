@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <boost/functional/hash.hpp>
 #include <cassert>
 #include <fstream>
 #include <iostream>
@@ -53,4 +54,26 @@ void print(const std::vector<T>& vec) {
     std::cout << std::endl;
 }
 
+struct Point {
+    Point(int x, int y) : x(x), y(y) {}
+    int x{0};
+    int y{0};
+
+    bool operator==(Point const& other) const {
+        return x == other.x && y == other.y;
+    }
+};
+
 }  // namespace cb
+
+namespace std {
+template <>
+struct hash<cb::Point> {
+    std::size_t operator()(const cb::Point& p) const {
+        size_t seed = 0;
+        boost::hash_combine(seed, p.x);
+        boost::hash_combine(seed, p.y);
+        return seed;
+    }
+};
+}  // namespace std
